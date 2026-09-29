@@ -1,0 +1,7 @@
+SHOWDOWN playtest mirror (F01 SHOWDOWN_CORE sandbox)
+Source repo: ubseoul/rich_alucard
+Source branch: frag/showdown-core/001
+Source SHA: 4d93dc9e3b6c58a0b7a9082b20a5409c16141406
+Files under js/ and fonts/ are byte-identical to that SHA; index.html differs only in relative asset paths (+ robots noindex, empty favicon).
+Mirror only: no integration into the campaign. Canonical source is the branch above.
+URL options: ?dev=1  ?hard=1  ?mission=skirmish|extract|boss|emergency  ?squad=MUSCLE,SHOOTER,GHOST,DOC  ?seed=..  ?tun=key:val

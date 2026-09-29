@@ -20,6 +20,10 @@
   .play { display: block; width: 100%; min-height: 52px; line-height: 52px; font-size: 16px; font-weight: 700; letter-spacing: 3px; color: var(--ink); background: var(--gold); border: 2px solid #fff9e8; outline: 1px solid var(--ink); box-shadow: 3px 3px 0 var(--blood); text-decoration: none; }
   .play:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--blood); }
   .play:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+  .card + .card { margin-top: 18px; }
+  .opts { margin: 12px 0 0; display: flex; gap: 8px; }
+  .opts a { flex: 1; min-height: 44px; line-height: 44px; font-size: 12px; letter-spacing: 2px; color: var(--cream); border: 2px solid var(--lav); outline: 1px solid var(--ink); text-decoration: none; background: #0f0d20; }
+  .opts a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
 </style>
 </head>
 <body>
@@ -30,6 +34,13 @@
       <p class="tag">F06-A</p>
       <p class="status">STATUS: UBE FEEL GATE</p>
       <a class="play" href="make-it-rain/">[ PLAY ]</a>
+    </section>
+    <section class="card" aria-label="Showdown">
+      <h2>SHOWDOWN</h2>
+      <p class="tag">F01</p>
+      <p class="status">STATUS: UBE FEEL GATE</p>
+      <a class="play" href="showdown/">[ PLAY ]</a>
+      <div class="opts"><a href="showdown/?hard=1">HARD</a><a href="showdown/?dev=1">DEV</a></div>
     </section>
   </main>
 </body>
