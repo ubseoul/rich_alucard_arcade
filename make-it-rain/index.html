@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>MAKE IT RAIN — Sandbox (F06-A)</title>
+<link rel="icon" href="data:," />
+<link rel="stylesheet" href="make_it_rain.css" />
+</head>
+<body>
+  <!-- MAKE IT RAIN sandbox (F06-A). Neutral placeholder art, no audio. Everything above the DEV divider is the game; below is tooling. -->
+  <main class="cab">
+    <h1 class="app__title sr-only">MAKE IT RAIN</h1>
+
+    <div class="stage" id="stage">
+      <canvas id="stage-canvas" aria-label="Make It Rain sandbox stage. Press and drag up on the cash stack to load bills, then flick up to throw."></canvas>
+      <div class="result-actions" id="result-actions" hidden>
+        <button type="button" class="btn btn--again" id="result-again">RUN IT BACK</button>
+      </div>
+    </div>
+
+    <div class="player-bar" id="player-bar" role="group" aria-label="Budget presets">
+      <button type="button" class="btn btn--budget" data-budget="5000" aria-pressed="false">$5K</button>
+      <button type="button" class="btn btn--budget" data-budget="10000" aria-pressed="true">$10K</button>
+      <button type="button" class="btn btn--budget" data-budget="25000" aria-pressed="false">$25K</button>
+      <button type="button" class="btn btn--ghost" id="player-restart">RESTART</button>
+    </div>
+
+    <div class="dev-divider" aria-hidden="true"><span>DEV TOOLS BELOW · NOT THE GAME</span></div>
+
+    <!-- DEVELOPMENT CONTROLS — visually separated, NOT part of the mechanic. -->
+    <aside class="dev" id="dev" aria-label="Development controls">
+      <div class="dev__head">
+        <span class="dev__tag">DEVELOPMENT CONTROLS</span>
+        <span class="dev__note">F06-A sandbox · no persistence</span>
+      </div>
+      <div class="dev__row">
+        <button type="button" class="btn btn--dev" id="dev-reset">RESET</button>
+        <label class="dev__seed">
+          SEED
+          <input type="number" id="dev-seed" value="1" min="1" step="1" />
+        </label>
+        <button type="button" class="btn btn--dev" id="dev-seed-apply">APPLY SEED + RESET</button>
+        <label class="dev__toggle">
+          <input type="checkbox" id="dev-show-tunables" /> SHOW TUNABLES
+        </label>
+      </div>
+      <pre class="dev__state" id="dev-state">state…</pre>
+      <pre class="dev__tunables" id="dev-tunables" hidden></pre>
+      <p class="dev__hint">AUDIO HOOKS: INERT (no sound sourced or played). ART: neutral placeholders.</p>
+    </aside>
+  </main>
+
+  <script src="make_it_rain_tunables.js"></script>
+  <script src="make_it_rain_core.js"></script>
+  <script src="make_it_rain.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      function boot() {
+        var canvas = document.getElementById('stage-canvas');
+        var again = document.getElementById('result-again');
+        var actions = document.getElementById('result-actions');
+        var budgetButtons = Array.prototype.slice.call(document.querySelectorAll('[data-budget]'));
+
+        function markBudget(budget) {
+          budgetButtons.forEach(function (btn) {
+            btn.setAttribute('aria-pressed', Number(btn.getAttribute('data-budget')) === budget ? 'true' : 'false');
+          });
+        }
+
+        var game = window.RAMakeItRainSandbox.mount(canvas, {
+          seed: 1,
+          onRoundStart: function (info) { actions.hidden = true; markBudget(info.budget); },
+          onRoundEnd: function () { actions.hidden = false; }
+        });
+        // Exposed for the real-browser review harness only.
+        window.makeItRainGame = game;
+
+        var stateEl = document.getElementById('dev-state');
+        var tunEl = document.getElementById('dev-tunables');
+        var showTun = document.getElementById('dev-show-tunables');
+        if (showTun) showTun.addEventListener('change', function () {
+          tunEl.hidden = !showTun.checked;
+          tunEl.textContent = showTun.checked
+            ? JSON.stringify(game.tunables, null, 2)
+            : '';
+        });
+        setInterval(function () {
+          if (stateEl) stateEl.textContent = JSON.stringify(game.getState());
+        }, 200);
+
+        budgetButtons.forEach(function (btn) {
+          btn.addEventListener('click', function () { game.startRound(Number(btn.getAttribute('data-budget'))); });
+        });
+        var restart = document.getElementById('player-restart');
+        if (restart) restart.addEventListener('click', function () { game.startRound(game.core.budget); });
+        if (again) again.addEventListener('click', function () { game.startRound(game.core.budget); });
+        var reset = document.getElementById('dev-reset');
+        if (reset) reset.addEventListener('click', function () { game.reset(); });
+        var apply = document.getElementById('dev-seed-apply');
+        if (apply) apply.addEventListener('click', function () {
+          var seed = Number(document.getElementById('dev-seed').value) || 1;
+          game.setSeed(seed);
+          game.startRound(game.core.budget);
+        });
+
+        game.startRound();
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+      else boot();
+    })();
+  </script>
+</body>
+</html>

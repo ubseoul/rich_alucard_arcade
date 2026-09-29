@@ -1,0 +1,236 @@
+/* MAKE IT RAIN sandbox styles (F06-A). Pixel-native presentation; fonts are bundled in ./fonts. */
+
+@font-face { font-family: "Monogram"; src: url("fonts/monogram.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "Press Start 2P"; src: url("fonts/press-start-2p.ttf") format("truetype"); font-display: swap; }
+
+:root {
+  --bg: #090813;
+  --ink: #10101b;
+  --purple: #17142c;
+  --purple-2: #241a45;
+  --cream: #f6efd9;
+  --lav: #b7b1df;
+  --lav-2: #403b72;
+  --blood: #7d194b;
+  --gold: #c18b3c;
+  --gold-hi: #f6c85a;
+  --cyan: #5fe3ff;
+  --dim: #a49fc0;
+  --font: "Press Start 2P", "Courier New", monospace;
+  --stage-w: min(100vw, 430px);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--cream);
+  font-family: "Courier New", monospace;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none;
+}
+
+body { min-height: 100vh; min-height: 100dvh; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ---- the game cabinet ---- */
+.cab {
+  width: var(--stage-w);
+  margin: 0 auto;
+  padding: 8px 8px 24px;
+}
+
+/* ---- stage ---- */
+.stage {
+  position: relative;
+  width: 100%;
+  height: 560px; /* fallback */
+  height: clamp(380px, calc(100vh - 92px), calc((var(--stage-w) - 16px) * 1.78));
+  height: clamp(380px, calc(100dvh - 92px), calc((var(--stage-w) - 16px) * 1.78));
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--lav);
+  outline: 2px solid var(--ink);
+  background: #07060f;
+  box-shadow: 4px 4px 0 var(--blood);
+  overflow: hidden;
+}
+
+#stage-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  cursor: crosshair;
+}
+
+.result-actions {
+  position: absolute;
+  left: 0; right: 0; bottom: 10px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+.result-actions[hidden] { display: none; }
+.result-actions .btn { pointer-events: auto; }
+
+/* ---- player bar (part of the game surface) ---- */
+.player-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) auto;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.btn {
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0;
+  line-height: 1.2;
+  color: #f4f0ff;
+  background: var(--purple);
+  border: 2px solid #e8e4f8;
+  outline: 1px solid var(--ink);
+  border-radius: 0;
+  padding: 10px 8px;
+  min-height: 46px;           /* touch target >= 44 */
+  min-width: 44px;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  box-shadow: 2px 2px 0 var(--blood);
+}
+
+.btn:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--blood); }
+.btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+.btn--budget[aria-pressed="true"] {
+  background: var(--gold-hi);
+  color: var(--ink);
+  border-color: #fff9e8;
+}
+.btn--ghost { color: var(--dim); background: #120f24; border-color: var(--lav-2); padding: 10px 12px; }
+
+.btn--again {
+  min-width: 190px;
+  min-height: 46px;
+  font-size: 11px;
+  background: var(--gold-hi);
+  color: var(--ink);
+  border-color: #fff9e8;
+  box-shadow: 3px 3px 0 var(--blood);
+}
+
+/* ---- development panel: unmistakably tooling, not gameplay ---- */
+.dev-divider {
+  margin: 44px -8px 0;
+  padding: 6px 8px;
+  text-align: center;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #b8bcc8;
+  background: repeating-linear-gradient(-45deg, #2a2d36 0 8px, #15161c 8px 16px);
+  border-top: 1px dashed #5a5f6c;
+  border-bottom: 1px dashed #5a5f6c;
+}
+.dev-divider span { background: #15161c; padding: 2px 8px; }
+
+.dev {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px dashed #4a4f5c;
+  background: #0c0d12;
+  font-family: "Courier New", monospace;
+  color: #9aa0ad;
+}
+
+.dev__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.dev__tag { font-size: 11px; letter-spacing: 2px; color: #c9ccd6; }
+.dev__note { font-size: 9px; color: #767b88; }
+
+.dev__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.dev .btn--dev {
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  padding: 8px 10px;
+  min-height: 36px;
+  color: #c9ccd6;
+  background: #171922;
+  border: 1px solid #4a4f5c;
+  outline: none;
+  box-shadow: none;
+}
+
+.dev__seed,
+.dev__toggle {
+  font-size: 11px;
+  color: #9aa0ad;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dev__seed input {
+  width: 64px;
+  font-family: inherit;
+  font-size: 12px;
+  color: #e6e8ee;
+  background: #090a0e;
+  border: 1px solid #4a4f5c;
+  padding: 6px;
+}
+
+.dev__state,
+.dev__tunables {
+  margin: 8px 0 0;
+  padding: 8px;
+  max-height: 180px;
+  overflow: auto;
+  font-size: 10px;
+  line-height: 1.45;
+  color: #8fd7a0;
+  background: #07080b;
+  border: 1px solid #2a2d36;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.dev__hint { margin: 8px 0 0; font-size: 9px; color: #767b88; }
+
+@media (max-width: 380px) {
+  .cab { padding: 6px 6px 20px; }
+  .btn { font-size: 9px; padding: 9px 6px; }
+  .btn--ghost { padding: 9px 8px; }
+  .dev-divider { margin-left: -6px; margin-right: -6px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:active { transform: none; }
+}

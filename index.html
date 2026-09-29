@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex" />
+<title>RICH ALUCARD ARCADE</title>
+<link rel="icon" href="data:," />
+<style>
+  :root { --bg: #090813; --ink: #10101b; --cream: #f6efd9; --lav: #b7b1df; --blood: #7d194b; --gold: #f6c85a; --dim: #a49fc0; --cyan: #5fe3ff; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--cream); font-family: "Courier New", monospace; -webkit-text-size-adjust: 100%; }
+  body { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 20px 16px; }
+  .arcade { width: min(100%, 380px); text-align: center; }
+  h1 { margin: 0 0 22px; font-size: 15px; letter-spacing: 3px; color: var(--cyan); font-weight: 700; }
+  .card { border: 2px solid var(--lav); outline: 2px solid var(--ink); background: #17142c; box-shadow: 4px 4px 0 var(--blood); padding: 22px 16px 20px; }
+  .card h2 { margin: 0; font-size: 22px; letter-spacing: 3px; color: var(--gold); }
+  .tag { margin: 8px 0 0; font-size: 13px; letter-spacing: 2px; color: var(--dim); }
+  .status { margin: 14px 0 20px; font-size: 12px; letter-spacing: 1px; color: var(--cream); }
+  .play { display: block; width: 100%; min-height: 52px; line-height: 52px; font-size: 16px; font-weight: 700; letter-spacing: 3px; color: var(--ink); background: var(--gold); border: 2px solid #fff9e8; outline: 1px solid var(--ink); box-shadow: 3px 3px 0 var(--blood); text-decoration: none; }
+  .play:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--blood); }
+  .play:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+</style>
+</head>
+<body>
+  <main class="arcade">
+    <h1>RICH ALUCARD ARCADE</h1>
+    <section class="card" aria-label="Make It Rain">
+      <h2>MAKE IT RAIN</h2>
+      <p class="tag">F06-A</p>
+      <p class="status">STATUS: UBE FEEL GATE</p>
+      <a class="play" href="make-it-rain/">[ PLAY ]</a>
+    </section>
+  </main>
+</body>
+</html>
