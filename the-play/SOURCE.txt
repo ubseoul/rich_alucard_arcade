@@ -1,0 +1,10 @@
+THE PLAY — UBE FEEL GATE (F01 THE PLAY browser sandbox) — arcade playtest mirror
+Source repo: ubseoul/rich_alucard
+Source branch: frag/showdown-core/play-sandbox-001
+Candidate SHA: 8561e095a11a1febcb00af9c00fa18a7e88eb50f
+Every file under assets/ and js/ is byte-identical to that SHA (extracted with git archive; the source tree layout is kept, so NO path or import was changed).
+Files omitted (not needed at runtime): docs, tests, tools, screenshots (assets/f01/play/shots), unused fonts.
+Hosting-only additions: this SOURCE.txt and the-play/index.html (a redirect to assets/f01/play/index.html that preserves ?query and #hash).
+Entry: the-play/  ->  the-play/assets/f01/play/index.html     QA/dev URL options: ?dev=1  ?seed=N  ?fresh=1  ?mute=1  ?calm=1  ?devbig=1
+Save namespace (localStorage): ra.f01.play.v1.*  — does not touch other Arcade entries.
+Mirror only: no engine, tuning, job, BAILED, FALL BACK or UI change. Canonical source is the branch/SHA above.

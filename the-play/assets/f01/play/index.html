@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#0b0716">
+<title>THE PLAY — Feel-Gate Sandbox</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Crect width=%2716%27 height=%2716%27 fill=%27%230b0716%27/%3E%3Crect x=%274%27 y=%274%27 width=%278%27 height=%278%27 fill=%27%23ff3d8b%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="play.css">
+</head>
+<body>
+<noscript>THE PLAY needs JavaScript.</noscript>
+<div class="app">
+  <div class="hud" id="hud"></div>
+  <div class="stage" id="stage"></div>
+</div>
+<!-- The preserved F01 seeded RNG + authored data publish globals; the PLAY modules read them (see js/frag/F01/play/env.mjs). Serve over http(s): ES modules do not load from file://. -->
+<script src="../../../js/frag/F01/rng.js"></script>
+<script src="../../../js/frag/F01/data.js"></script>
+<script src="../../../js/frag/F01/sprites.js"></script>
+<script type="module">
+  import {boot} from './play-ui.mjs';
+  const start=()=>boot();
+  if(document.fonts&&document.fonts.load){document.fonts.load('10px "Press Start 2P"').then(start,start);}else{start();}
+</script>
+</body>
+</html>
